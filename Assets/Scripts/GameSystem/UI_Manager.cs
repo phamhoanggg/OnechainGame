@@ -82,12 +82,15 @@ public class UI_Manager : FastSingleton<UI_Manager>
 
     public void ClickHomeBtn()
     {
+        GameController.instance.gameState = GameController.GameState.Menu;
         Screens[(int)ScreenState.PauseGame].SetActive(false);
         Screens[(int)ScreenState.GamePlay].SetActive(false);
         Screens[(int)ScreenState.Result].SetActive(false);
         equippedList.SetActive(false);
         Screens[(int)ScreenState.MainMenu].SetActive(true);
         GameController.instance.PlayTime = 0;
+        GameController.instance.coin = 0;
+        GameController.instance.kills = 0;
 
     }
 

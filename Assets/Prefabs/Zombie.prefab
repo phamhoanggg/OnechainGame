@@ -51,7 +51,7 @@ MonoBehaviour:
   moveSpeed: 0.05
   HP: 30
   curHP: 20
-  damage: 20
+  damage: 10
   target: {fileID: 0}
   listEXP:
   - {fileID: 7901765610760333266, guid: 26bce3a615e9465488057673e54a6560, type: 3}

@@ -18,7 +18,7 @@ public class Player : FastSingleton<Player>
     // Start is called before the first frame update
     void Start()
     {
-        OnInit();
+
     }
 
     // Update is called once per frame
@@ -26,17 +26,20 @@ public class Player : FastSingleton<Player>
     {
         if (curHP <= 0)
         {
-            OnDead();
+            if (GameController.instance.gameState == GameController.GameState.GamePlay)
+            {
+                curHP = 0;
+                OnDead();
+            }
+            
         }
         if (curHP > HP)
         {
             curHP = HP;
         }
-        if (this.gameObject)
-        {
-            HPfill.fillAmount = curHP / HP;
-        }
-        
+
+        HPfill.fillAmount = curHP / HP;
+
 
         if (CurrentEXP >= MaxEXP)
         {
@@ -46,6 +49,7 @@ public class Player : FastSingleton<Player>
 
     public void OnInit()
     {
+        GetComponent<PlayerMoving>().anim.SetTrigger("idle");
         transform.position = new Vector3(0, 0, 20);
         curHP = HP;
         HPfill.fillAmount = 1;
@@ -68,9 +72,11 @@ public class Player : FastSingleton<Player>
     private void OnDead()
     {
         GameController.instance.PauseGame();
+        GameController.instance.gameState = GameController.GameState.Result;
         GetComponent<PlayerMoving>().anim.SetTrigger("die");
         UI_Manager.instance.Screens[(int)UI_Manager.ScreenState.GamePlay].SetActive(false);
         UI_Manager.instance.ResultText.text = "DEFEATED!!!";
+        UI_Manager.instance.KillResultText.text = "Kill: " + GameController.instance.kills;
         UI_Manager.instance.Screens[(int)UI_Manager.ScreenState.Result].SetActive(true);
 
         foreach (var screen in UI_Manager.instance.Screens)

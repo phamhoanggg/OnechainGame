@@ -17,14 +17,18 @@ public class Zombie : Enemy
     // Update is called once per frame
     void FixedUpdate()
     {
-        Vector3 direct = target.position - transform.position;
-        if (direct.magnitude > 0.5f)
-            transform.position += direct.normalized * moveSpeed;
-
-        if (curAtkCD > 0)
+        if (GameController.instance.gameState == GameController.GameState.GamePlay)
         {
-            curAtkCD -= Time.fixedDeltaTime;
+            Vector3 direct = target.position - transform.position;
+            if (direct.magnitude > 0.5f)
+                transform.position += direct.normalized * moveSpeed;
+
+            if (curAtkCD > 0)
+            {
+                curAtkCD -= Time.fixedDeltaTime;
+            }
         }
+        
     }
 
     private void OnTriggerStay2D(Collider2D other)

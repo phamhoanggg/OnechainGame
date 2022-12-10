@@ -18,21 +18,26 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (curAtkCD <= 0)
+        if (GameController.instance.gameState == GameController.GameState.GamePlay)
         {
-            Vector2 shurikenDir = GetComponent<PlayerMoving>().direction.normalized;
-            if (shurikenDir != Vector2.zero)
+            if (curAtkCD <= 0)
             {
-                shuriken.GetComponent<Shuriken>().direction = shurikenDir;
-            }
-            else shuriken.GetComponent<Shuriken>().direction = Vector2.right;
+                Vector2 shurikenDir = GetComponent<PlayerMoving>().direction.normalized;
+                if (shurikenDir != Vector2.zero)
+                {
+                    shuriken.GetComponent<Shuriken>().direction = shurikenDir;
+                }
+                else shuriken.GetComponent<Shuriken>().direction = Vector2.right;
 
-            Instantiate(shuriken, transform.position, Quaternion.identity); 
-            curAtkCD = attackCD;
-        }else
-        {
-            curAtkCD -= Time.fixedDeltaTime;
+                Instantiate(shuriken, transform.position, Quaternion.identity);
+                curAtkCD = attackCD;
+            }
+            else
+            {
+                curAtkCD -= Time.fixedDeltaTime;
+            }
         }
+        
     }
 
 
